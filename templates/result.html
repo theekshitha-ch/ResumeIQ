@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ResumeIQ | Analysis Report</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+        }
+    </style>
+
+</head>
+
+<body class="bg-gradient-to-br from-slate-100 via-blue-50 to-slate-100 min-h-screen">
+
+<div class="max-w-7xl mx-auto px-5 py-10">
+
+    <!-- Header -->
+
+    <div class="text-center">
+
+        <h1 class="text-4xl md:text-5xl font-bold text-blue-600">
+            ResumeIQ
+        </h1>
+
+        <p class="text-gray-600 mt-3 text-lg">
+            AI Resume Analysis Report
+        </p>
+
+    </div>
+
+    <!-- Score Cards -->
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+
+        <!-- Resume Match -->
+
+        <div class="bg-white rounded-2xl shadow-xl p-6">
+
+            <h2 class="font-semibold text-lg">
+                📊 Resume Match
+            </h2>
+
+            <p class="text-5xl font-bold text-blue-600 mt-4">
+                {{data.match_score}}%
+            </p>
+
+            <div class="w-full bg-gray-200 rounded-full h-3 mt-5">
+
+                <div
+                    class="bg-blue-600 h-3 rounded-full"
+                    style="width: {{data.match_score}}%;">
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ATS Score -->
+
+        <div class="bg-white rounded-2xl shadow-xl p-6">
+
+            <h2 class="font-semibold text-lg">
+                🤖 ATS Compatibility (AI Estimate)
+            </h2>
+
+            <p class="text-5xl font-bold text-green-600 mt-4">
+                {{data.ats_score}}%
+            </p>
+
+            <div class="w-full bg-gray-200 rounded-full h-3 mt-5">
+
+                <div
+                    class="bg-green-600 h-3 rounded-full"
+                    style="width: {{data.ats_score}}%;">
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Hiring Readiness -->
+
+        <div class="bg-white rounded-2xl shadow-xl p-6">
+
+            <h2 class="font-semibold text-lg">
+                💼 Hiring Readiness (AI Estimate)
+            </h2>
+
+            <p class="text-5xl font-bold text-purple-600 mt-4">
+                {{data.hiring_readiness}}%
+            </p>
+
+            <div class="w-full bg-gray-200 rounded-full h-3 mt-5">
+
+                <div
+                    class="bg-purple-600 h-3 rounded-full"
+                    style="width: {{data.hiring_readiness}}%;">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Two Column Layout -->
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+
+        <!-- Strengths -->
+
+        <div class="bg-white rounded-2xl shadow-xl p-6">
+
+            <h2 class="text-xl font-bold mb-4 text-green-600">
+                ✅ Strengths
+            </h2>
+
+            <ul class="list-disc ml-6 space-y-2">
+
+                {% for item in data.strengths %}
+                    <li>{{item}}</li>
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+        <!-- Missing Skills -->
+
+        <div class="bg-white rounded-2xl shadow-xl p-6">
+
+            <h2 class="text-xl font-bold mb-4 text-red-600">
+                ❌ Missing Skills
+            </h2>
+
+            <ul class="list-disc ml-6 space-y-2">
+
+                {% for item in data.missing_skills %}
+                    <li>{{item}}</li>
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+    </div>
+
+    <!-- Missing Keywords -->
+
+    <div class="bg-white rounded-2xl shadow-xl p-6 mt-6">
+
+        <h2 class="text-xl font-bold text-orange-500 mb-4">
+            🔑 Missing Keywords
+        </h2>
+
+        <div class="flex flex-wrap gap-3">
+
+            {% for item in data.missing_keywords %}
+
+            <span class="bg-orange-100 text-orange-700 px-4 py-2 rounded-full">
+                {{item}}
+            </span>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    <!-- Recommendations -->
+
+    <div class="bg-white rounded-2xl shadow-xl p-6 mt-6">
+
+        <h2 class="text-xl font-bold text-blue-600 mb-4">
+            💡 Recommendations
+        </h2>
+
+        <ul class="list-disc ml-6 space-y-2">
+
+            {% for item in data.recommendations %}
+                <li>{{item}}</li>
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+    <!-- Overall Feedback -->
+
+    <div class="bg-white rounded-2xl shadow-xl p-6 mt-6">
+
+        <h2 class="text-xl font-bold text-purple-600 mb-4">
+            📝 Overall Feedback
+        </h2>
+
+        <p class="leading-8 text-gray-700">
+            {{data.overall_feedback}}
+        </p>
+
+    </div>
+
+    <!-- Buttons -->
+
+    <div class="flex flex-col md:flex-row justify-center gap-4 mt-10">
+
+        <a href="/"
+           class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl text-center transition">
+
+            Analyze Another Resume
+
+        </a>
+
+        <button
+            onclick="window.print()"
+            class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-xl transition">
+
+            Print Report
+
+        </button>
+
+    </div>
+
+    <!-- Footer -->
+
+    <div class="text-center mt-12 text-gray-500">
+
+        <p>
+            Powered by Google Gemini AI
+        </p>
+
+        <p class="mt-2">
+            Made with ❤️ by Theekshitha Chevvakula
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

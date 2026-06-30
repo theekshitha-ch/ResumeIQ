@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResumeIQ | AI Resume Analyzer</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        .loader {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-slate-100 via-blue-50 to-slate-100 min-h-screen">
+
+    <div class="max-w-6xl mx-auto px-5 py-10">
+
+        <!-- Hero -->
+
+        <div class="text-center">
+
+            <h1 class="text-4xl md:text-6xl font-bold text-blue-600">
+                ResumeIQ
+            </h1>
+
+            <p class="text-lg md:text-2xl text-gray-700 mt-4 font-medium">
+                Analyze. Improve. Get Hired.
+            </p>
+
+            <p class="mt-5 text-gray-500 max-w-3xl mx-auto">
+                Upload your resume and compare it with any job description using
+                Google Gemini AI. Receive ATS insights, resume match scores,
+                missing skills, hiring readiness and actionable recommendations.
+            </p>
+
+        </div>
+
+        <!-- Features -->
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-12">
+
+            <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+
+                <div class="text-5xl">📊</div>
+
+                <h2 class="font-semibold mt-4">
+                    Resume Match
+                </h2>
+
+                <p class="text-gray-500 text-sm mt-2">
+                    Compare your resume with any job description.
+                </p>
+
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+
+                <div class="text-5xl">🤖</div>
+
+                <h2 class="font-semibold mt-4">
+                    AI Analysis
+                </h2>
+
+                <p class="text-gray-500 text-sm mt-2">
+                    Powered by Google Gemini AI.
+                </p>
+
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+
+                <div class="text-5xl">🎯</div>
+
+                <h2 class="font-semibold mt-4">
+                    ATS Insights
+                </h2>
+
+                <p class="text-gray-500 text-sm mt-2">
+                    Improve ATS compatibility and keyword coverage.
+                </p>
+
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+
+                <div class="text-5xl">💼</div>
+
+                <h2 class="font-semibold mt-4">
+                    Hiring Readiness
+                </h2>
+
+                <p class="text-gray-500 text-sm mt-2">
+                    AI-estimated readiness for the selected role.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Form -->
+
+        <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-10 mt-12">
+
+            <form id="resumeForm"
+                action="/analyze"
+                method="POST"
+                enctype="multipart/form-data">
+
+                <div>
+
+                    <label class="block font-semibold text-lg mb-3">
+
+                        📄 Upload Resume (PDF)
+
+                    </label>
+
+                    <input
+                        type="file"
+                        name="resume"
+                        accept=".pdf"
+                        required
+                        class="w-full border border-gray-300 rounded-xl p-4
+                        file:bg-blue-600
+                        file:text-white
+                        file:border-0
+                        file:px-5
+                        file:py-2
+                        file:rounded-lg
+                        file:cursor-pointer">
+
+                </div>
+
+                <div class="mt-8">
+
+                    <label class="block font-semibold text-lg mb-3">
+
+                        💼 Job Description
+
+                    </label>
+
+                    <textarea
+                        name="job_description"
+                        rows="10"
+                        required
+                        placeholder="Paste the complete job description here..."
+                        class="w-full border border-gray-300 rounded-xl p-5
+                        focus:outline-none
+                        focus:ring-2
+                        focus:ring-blue-500"></textarea>
+
+                </div>
+
+                <button
+                    id="analyzeBtn"
+                    type="submit"
+                    class="mt-8 w-full bg-blue-600 hover:bg-blue-700
+                    transition
+                    text-white
+                    font-semibold
+                    py-4
+                    rounded-xl
+                    flex
+                    justify-center
+                    items-center
+                    gap-3">
+
+                    <span id="btnText">
+
+                        🚀 Analyze Resume
+
+                    </span>
+
+                    <div class="loader" id="loader"></div>
+
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- Footer -->
+
+        <div class="text-center mt-10 text-gray-500">
+
+            <p>
+
+                Powered by Google Gemini AI
+
+            </p>
+
+            <p class="mt-2">
+
+                Made with ❤️ by Theekshitha Chevvakula
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        const form = document.getElementById("resumeForm");
+
+        form.addEventListener("submit", function () {
+
+            document.getElementById("btnText").innerHTML =
+                "Analyzing Resume...";
+
+            document.getElementById("loader").style.display = "block";
+
+            document.getElementById("analyzeBtn").disabled = true;
+
+        });
+
+    </script>
+
+</body>
+
+</html>
